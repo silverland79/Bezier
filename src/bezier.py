@@ -27,7 +27,7 @@ if __name__ == '__main__':
     x2, y2 = 1, .75
     x3, y3 = 1, 1
 
-    print("t\tx(t)\ty(t)\tTheta")
+    f = "t\tx(t)\ty(t)\tTheta\n"
 
     t = 0.0
     x, y = -x1, -y1
@@ -45,7 +45,9 @@ if __name__ == '__main__':
         # calculate angle
         theta = (-(math.atan2((y - last_y), (x - last_x)) * (180 / math.pi) - 90) + 360) % 360
 
-        print(str(t) + "\t" + str(x) + "\t" + str(y) + "\t" + str(theta))
+        f += str(t) + "\t" + str(x) + "\t" + str(y) + "\t" + str(theta) + "\n"
         if abs(x-x3) + abs(y-y3) < .0001 or t > 10:
             break
         t += .01
+
+open("../tests/bezier.txt", 'w').write(f)
