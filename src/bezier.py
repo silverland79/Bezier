@@ -8,16 +8,11 @@ __author__ = "Wesley Soo-Hoo"
 __license__ = "MIT"
 
 
-def linear(p0, p1, t):
-    return (1-t)*p0 + t*p1
-
-
-def quadratic(p0, p1, p2, t):
-    return (1-t)*(linear(p0, p1, t)) + t*(linear(p1, p2, t))
-
-
-def cubic(p0, p1, p2, p3, t):
-    return (1-t)*(quadratic(p0, p1, p2, t)) + t*(quadratic(p1, p2, p3, t))
+def bezier(points, t):
+    if len(points) == 1:
+        return points[0]
+    else:
+        return (1-t)*bezier(points[:-1], t) + t*bezier(points[1:], t)
 
 
 if __name__ == '__main__':
@@ -39,8 +34,8 @@ if __name__ == '__main__':
 
         # calculate the x and y cords
         # NOTE: t is NOT time. It is just a variable used to link the parametric equations x(t) and y(t)
-        x = cubic(x0, x1, x2, x3, t)
-        y = cubic(y0, y1, y2, y3, t)
+        x = bezier([x0, x1, x2, x3], t)
+        y = bezier([y0, y1, y2, y3], t)
 
         # calculate angle
         theta = (-(math.atan2((y - last_y), (x - last_x)) * (180 / math.pi) - 90) + 360) % 360
